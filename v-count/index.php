@@ -9,7 +9,7 @@ if (!empty($_POST)) {
     $startDate = $_POST['start'];
     $endDate = $_POST['end'];
 } else {
-    $startDate = date("Y-m-d", strtotime("-7 days"));
+    $startDate = date("Y-m-d", strtotime("-6 days"));
     $endDate = date("Y-m-d");
 }
 $post_array  =  array(
@@ -80,39 +80,60 @@ fclose($file_json);
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body>
-    <nav class="navbar navbar-light bg-light">
-            <span class="navbar-brand mb-0 fs-2 p-3">Dashboard</span>
-            <span class="navbar-brand mb-0 fs-2">
-                <button class="button fs-2" id="datepicker" data-role="popover" data-popover-text='
-            <div class="dateform d-flex justify-content-center align-items-center text-center p-3">
+<body class="bg-light">
+    <nav class="navbar navbar-light bg-light border-bottom border-1 border-secondary">
+        <span class="navbar-brand mb-0 fs-2 p-3">Dashboard</span>
+        <span class="navbar-brand mb-0 fs-2">
+            <button class="button fs-2" id="datepicker" data-role="popover" data-popover-text='
+            <div class="dateform d-flex justify-content-center flex-column align-items-center text-center p-3">
                 <form action="index.php" method="POST" onsubmit="dateChanger()">
                     <label for="start" class="m-2">Choose a starting date:</label>
                     <input data-role="datepicker" data-distance="1" type="date" required name="start" id="start" value="<?php echo $startDate ?>" max="<?php echo date("Y-m-d", strtotime("-1 days")); ?>" >
                     <label for="end" class="m-2">Choose an ending date:</label>
                     <input data-role="datepicker" data-distance="1" type="date" required name="end" id="end" max="<?php echo date("Y-m-d"); ?>" onchange="dateCheck()" value="<?php echo $endDate ?>">
-                    <input type="submit" class="mt-4">
+                    <input type="submit" value="Change Date" class="mt-4">
                 </form>
+                <div class="d-flex justify-content-center align-items-center mt-2">
+                    <input type="checkbox" onclick="compareDates()" id="check" data-role="checkbox">
+                    <label for="comparisons">Compare dates</label>
+                </div>
             </div>
             ' data-popover-position="bottom" data-popover-hide="0">
-                    Change Date
-                </button>
-            </span>
+                Change Date
+            </button>
+        </span>
 
         </div>
     </nav>
-    <div class="w-100 d-flex justify-content-center flex-column text-center">
+    <div class="w-100 d-flex justify-content-center flex-column flex-wrap text-center border-bottom">
         <p class="fs-2">See your store data!</p>
-        <div style="max-width: 500px;">
-            <canvas id="myChart"></canvas>
+        <div class="d-flex flex-wrap justify-content-around">
+
+            <div class="p-3 bg-light text-center">
+                <div class="btn-group">
+                    <a class="btn btn-primary" id="enter" aria-current="page">In</a>
+                    <a class="btn btn-primary" id="exit" >Out</a>
+                    <a class="btn btn-primary active" id="enterAndExit" >In & Out</a>
+                </div>
+                <div class="chart">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+            <div class="m-3 border-bottom p-3">
+                <div>
+                    <p class="fs-4">Total traffic for desired date:</p>
+                    <p id="peopleIn"></p>
+                    <p id="peopleOut"></p>
+                </div>
+            </div>
         </div>
+
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="https://cdn.metroui.org.ua/v4.3.2/js/metro.min.js"></script>
     <script src="scripts/js/chart.js"></script>
-    <script src="scripts/js/script.js"></script>
 
 </body>
 
